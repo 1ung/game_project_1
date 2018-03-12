@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" href="style.css"><title>Speedtyping</title>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-4" id="timerDiv">
+				<div id="timerText" class="statsText">Time</div>
+				<div><span id="timer"></span></div>
+			</div>
+			<div class="col-4" id="wpmDiv">
+				<div id="wpmText" class="statsText">
+					WPM
+				</div>
+				<div id="wpm">0</div>
+			</div>
+			<div class="col-4" id="accuracyDiv">
+				<div id="accuracyText" class="statsText">
+					Accuracy
+				</div>
+				<div id="accuracy">100
+					<span> %</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col">
+				<div id="border">
+					<div id="words-box">
+						<div id="text-box">
+							<div id="show-texts">
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-4"></div>
+			<div class="col-4">
+				<button id="start">Start</button>
+				<button id="reset">Reset</button>
+			</div>
+			<div class="col-4"></div>
+		</div>
+	</div>
+	<script type="text/javascript" src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+#text-box {
+	width: 668px;
+	height: 160px;
+	margin: 20px 0;
+	color: grey;
+	border: 3px solid #ff8000;
+}
+
+
+#show-texts {
+	height: 160px;
+	overflow: scroll;
+	font-family: 'Roboto', sans-serif;
+	font-size: 34px;
+}
+
+#start {
+	margin-right: 20px;
+}
+
+#reset {
+	margin-left: 20px;
+}
+
+.current-letter {
+	color: #FFFFFF;
+	background-color: #000000;
+}

@@ -2,7 +2,7 @@
 // allow backspace and reammendment of words accuracy not changed
 
 /* Test results = 
-= speed (WPM) (not sure how to )
+= speed (WPM) (not sure how to calculate words)
 = Accuracy
 = correct entries (letters)
 = incorrect entries (letters)
@@ -129,6 +129,7 @@ function checkKeyPress() {
 		case 'ArrowDown':
 		case 'ArrowLeft':
 		case 'ArrowRight':
+		case " ":
 
 		return true;
 
@@ -159,6 +160,12 @@ function checkKeyPress() {
 		break;
 
 		// case " ":
+
+		// preventTimer ++;
+		// currentPos++;
+		// console.log('potato');
+
+		// break;
 
 		// if (spanray[currentPos].textContent !== " ") {
 		// 	spanray[currentPos].style.color = 'red';

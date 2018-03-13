@@ -3,7 +3,6 @@
 	height: 168px;
 	margin: 20px 0;
 	color: #808080;
-	border: 3px solid #ff8000;
 }
 
 
@@ -13,6 +12,7 @@
 	font-family: 'Roboto', sans-serif;
 	font-size: 26px;
 	background-color: #F5F5F5;
+	border: 3px solid #ff8000;
 }
 
 #start {

@@ -1,20 +1,19 @@
 // allow reset
-// allow backspace and reammendment of words accuracy not changed
+
 
 /* Test results = 
 = speed (WPM) (not sure how to calculate words)
-= Accuracy
+= Accuracy (not affected upon backspace)
 = correct entries (letters)
 = incorrect entries (letters)
 = ammended entries (letters)
 = error rate
 = complete words
-= total time:
 */
 
 /* bugs to fix
 - Change space background-color to red if even.key !== " "
-- Smooth scroll not working. Don't know why >_<"
+- Smooth scroll not working.  Not sure why >_<"
 */
 
 var currentPos = 0;
@@ -129,11 +128,10 @@ function checkKeyPress() {
 		case 'ArrowDown':
 		case 'ArrowLeft':
 		case 'ArrowRight':
-		case " ":
+
 
 		return true;
 
-		preventTimer ++;
 		break;
 
 

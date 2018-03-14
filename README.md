@@ -14,14 +14,14 @@ Game Instructions:
 
 Unsolved problems
 
-- WPM ( unsure how to determine & count number of words )
+- WPM
 - Accuracy
 - Reset button
-- Auto smooth scrolling of text box when text has reached beyond limit of box area
 
 
 Bugs:
-- Empty space background color not changing to red if key not equals to Spacebar
+
+- Text color not turning to white when backspaced
 
 
 

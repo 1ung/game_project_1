@@ -6,14 +6,9 @@
 = Accuracy (not affected upon backspace)
 = correct entries (letters)
 = incorrect entries (letters)
-= ammended entries (letters)
+= amended entries (letters)
 = error rate
 = complete words
-*/
-
-/* bugs to fix
-- Change space background-color to red if even.key !== " "
-- Smooth scroll not working.  Not sure why >_<"
 */
 
 var currentPos = 0;
@@ -32,22 +27,23 @@ var threePigs = "Once upon a time there was an old mother pig who had three litt
 
 // countdown from 1 min
 var timer = document.getElementById('timer');
-countdown = 60;
+var countdown = 10;
+
 
 function onTimer() {
-	timer.textContent = countdown;
+	timer.innerHTML = countdown;
 	countdown--;
 	if (countdown < 0) {
 		timer.style.backgroundColor = 'red';
 		window.removeEventListener('keydown', checkKeyPress);
 
-	// } else if (countdown === 20) {
-	// 	showTexts.scrollTop(150);
-}
+		keyCount();
 
-else {
-	setTimeout(onTimer, 1000);
-}
+	}
+
+	else {
+		setTimeout(onTimer, 1000);
+	}
 };
 
 // prevent countdown from executing more than once
@@ -89,7 +85,7 @@ start.addEventListener('click', function() {
 });
 
 
-// to make sure it repeats check only after keypress
+// fires off following functions when keydown
 function activate() {
 	window.addEventListener('keydown', checkKeyPress);
 	window.addEventListener('keydown', initCountdown);
@@ -97,6 +93,8 @@ function activate() {
 };
 
 var spanray = Array.from(document.querySelectorAll('.script-letter'));
+
+
 
 // highlight first letter upon starting
 function highlight() {
@@ -115,6 +113,10 @@ var reset = document.getElementById('reset');
 
 
 function checkKeyPress() {
+
+	initScroll();
+
+
 	switch(event.key) {
 
 		case 'Shift':
@@ -128,8 +130,6 @@ function checkKeyPress() {
 		case 'ArrowDown':
 		case 'ArrowLeft':
 		case 'ArrowRight':
-
-
 		return true;
 
 		break;
@@ -139,125 +139,190 @@ function checkKeyPress() {
 		case 'Backspace':
 
 		if (currentPos > 0) {
-			spanray[currentPos].classList.toggle("current-letter");
-			spanray[currentPos].style.color = 'grey';
+
 			previousPos = currentPos;
 			currentPos --;
-			spanray[currentPos].classList.toggle("current-letter");
-			spanray[currentPos].style.color = 'white';
-			preventTimer ++;
+			spanray[previousPos].classList.toggle("current-letter");
 
+			preventTimer++;
 			console.log(currentPos);
+
+			if (spanray[currentPos].textContent === " ") {
+
+				spanray[currentPos].style.backgroundColor = 'red';
+				spanray[currentPos].classList.toggle("current-letter");
+
+			} else {
+
+				spanray[currentPos].style.color = '#808080';
+				spanray[currentPos].classList.toggle("current-letter");
+
+			}
+
+
+
 
 		} else if (currentPos === 0) {
 			spanray[currentPos].style.color = 'white';
 
 			preventTimer ++;
-		}
+		};
 
-		break;
+			 // condition to check for space and chg bk bg color if ammended
 
-		// case " ":
-
-		// preventTimer ++;
-		// currentPos++;
-		// console.log('potato');
-
-		// break;
-
-		// if (spanray[currentPos].textContent !== " ") {
-		// 	spanray[currentPos].style.color = 'red';
-		// 	previousPos = currentPos;
-		// 	currentPos++;
-		// 	spanray[previousPos].classList.toggle("current-letter");
-		// 	spanray[currentPos].classList.toggle("current-letter");
-		// } else {
-
-		// }
-
-		// break;
-
-		case spanray[currentPos].textContent:
-
-		spanray[currentPos].style.color = 'blue';
-		previousPos = currentPos;
-		currentPos++;
-		spanray[previousPos].classList.toggle("current-letter");
-		spanray[currentPos].classList.toggle("current-letter");
-
-		preventTimer ++;
-		console.log(currentPos);
+			 break;
 
 
-		break;
+			 case spanray[currentPos].textContent:
 
-		default:
+			 if (spanray[currentPos].textContent === " ") {
 
-		spanray[currentPos].style.color = 'red';
-		previousPos = currentPos;
-		currentPos++;
-		spanray[previousPos].classList.toggle("current-letter");
-		spanray[currentPos].classList.toggle("current-letter");
+			 	spanray[currentPos].style.backgroundColor = '#F5F5F5';
+			 	previousPos = currentPos;
+			 	currentPos++;
+			 	spanray[previousPos].classList.toggle("current-letter");
+			 	spanray[currentPos].classList.toggle("current-letter");
 
-		preventTimer ++;
-		console.log(currentPos);
+			 	preventTimer++;
+			 	totalKeys++;
 
-		break;
+			 	console.log(currentPos);
 
-		// if (spanray[currentPos].textContent === " ") {
-			// spanray[currentPos].style.backgroundColor = 'red';
-			// previousPos = currentPos;
-			// currentPos++;
-			// spanray[previousPos].classList.toggle("current-letter");
-			// spanray[currentPos].classList.toggle("current-letter");
-		// }
+			 } else {
+
+			 	spanray[currentPos].style.color = 'blue';
+			 	previousPos = currentPos;
+			 	currentPos++;
+			 	spanray[previousPos].classList.toggle("current-letter");
+			 	spanray[currentPos].classList.toggle("current-letter");
+
+			 	preventTimer++;
+			 	totalKeys++;
+
+			 	console.log(currentPos);
 
 
-	}
-};
+			 }
+
+
+			 break;
+
+			 default:
+
+			 spanray[currentPos].style.color = 'red';
+			 previousPos = currentPos;
+			 currentPos++;
+			 spanray[previousPos].classList.toggle("current-letter");
+			 spanray[currentPos].classList.toggle("current-letter");
+
+			 preventTimer ++;
+			 totalKeys++;
+			 console.log(currentPos);
+
+			 if (spanray[previousPos].textContent === " ") {
+			 	spanray[previousPos].style.backgroundColor = 'red';
+
+
+			 } 
+
+			 break;
+
+
+			}
+
+		};
 
 //create special Id for scroll function
 
-spanray[222].setAttribute('id', 'first-scroll');
-spanray[442].setAttribute('id', 'second-scroll');
-spanray[667].setAttribute('id', 'third-scroll');
-spanray[890].setAttribute('id', 'fourth-scroll');
-spanray[1112].setAttribute('id', 'fifth-scroll');
+spanray[261].setAttribute('id', 'first-scroll');
+spanray[363].setAttribute('id', 'second-scroll');
+spanray[465].setAttribute('id', 'third-scroll');
+spanray[567].setAttribute('id', 'fourth-scroll');
+spanray[669].setAttribute('id', 'fifth-scroll');
+spanray[771].setAttribute('id', 'sixth-scroll');
 
 var firstScroll = document.getElementById('first-scroll');
 var secondScroll = document.getElementById('second-scroll');
 var thirdScroll = document.getElementById('third-scroll');
 var fourthScroll = document.getElementById('fourth-scroll');
 var fifthScroll = document.getElementById('fifth-scroll');
+var sixthScroll = document.getElementById('sixth-scroll');
 
 // scroll to next
 
-// function scrollNext() {
-// 	if (currentPos === 221) {
-// 		firstScroll.scrollIntoView({behavior: "smooth"});
-// 	}
-// };
+function scrollOne() {
+	firstScroll.scrollIntoView({behavior: "smooth"});
+};
 
-// scrollNext();
+function scrollTwo() {
+	secondScroll.scrollIntoView({behavior: "smooth"});
+};
 
-function smoothScroll(element) {
-	window.scrollTo ({
-		'behavior': 'smooth',
-		'left': 0,
-		'top': element.offsetTop
-	});
-}
+function scrollThree() {
+	thirdScroll.scrollIntoView({behavior: "smooth"});
+};
 
-function autoScroll() {
-	if (currentPos === 221) {
-		smoothScroll(firstScroll);
-		console.log('this should work?');
+function scrollFour() {
+	fourthScroll.scrollIntoView({behavior: "smooth"});
+};
 
-	} else if (currentPos === 441) {
-		smoothScroll(secondScroll);
+function scrollFive() {
+	fifthScroll.scrollIntoView({behavior: "smooth"});
+};
+
+function scrollSix() {
+	sixthScroll.scrollIntoView({behavior: "smooth"});
+};
+
+function initScroll() {
+	if (currentPos === 201) {
+		scrollOne();
+
+	} else if (currentPos === 305) {
+		scrollTwo();
+
+	} else if (currentPos === 410) {
+		scrollThree();
+
+	} else if (currentPos === 512) {
+		scrollFour();
+
+	} else if (currentPos === 613) {
+		scrollFive();
+
+	} else if (currentPos === 718) {
+		scrollSix();
+	}
+
+
+};
+
+function keyCount() {
+	
+	for (var k = 0; k < currentPos; k++) {
+
+		totalKeys += 1;
+		console.log('total keys = ' + totalKeys);
+
+		if (spanray[k].style.color === 'blue') {
+			correctKeys += 1;
+			console.log('correct keys = ' + correctKeys);
+
+		} else if (spanray[k].style.color === 'red') {
+			wrongKeys +=1;
+			console.log('wrong keys = ' + wrongKeys);
+
+		} else if (spanray[k].textContent === " ") {
+			wordsTyped += 1;
+			console.log('total words = ' + wordsTyped);
+
+		}
 	}
 };
 
-autoScroll();
+// correct = blue && space !== red
 
+// wrong = red && space red
+
+// total = red + blue + space
 

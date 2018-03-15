@@ -41,7 +41,7 @@ var threePigs = "Once upon a time there was an old mother pig who had three litt
 
 // countdown from 1 min
 var timer = document.getElementById('timer');
-var countdown = 3600;
+var countdown = 60;
 
 
 function onTimer() {

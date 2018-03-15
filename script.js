@@ -385,7 +385,7 @@ var accuracyId = document.getElementById('accuracy');
 // count for Accuracy
 function typingAccuracy() {
 
-	accuracyId.textContent = accuracy;
+	accuracyId.textContent = accuracy + " %"
 	accuracy = Math.round([(correctKeys / totalEntries) * 100])
 	
 };

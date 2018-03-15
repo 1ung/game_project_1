@@ -20,7 +20,6 @@ Unsolved problems
 
 - Getting WPM
 - Displaying  WPM
-- Displaying Accuracy
 - Reset button
 
 

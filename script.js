@@ -389,3 +389,5 @@ function typingAccuracy() {
 	accuracy = Math.round([(correctKeys / totalEntries) * 100])
 	
 };
+
+setInterval(typingAccuracy, 1000);

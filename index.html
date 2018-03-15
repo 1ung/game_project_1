@@ -1,45 +1,79 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-	<link rel="stylesheet" href="style.css"><title>Speedtyping</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css"><title>Speedtyping</title>
 </head>
 <body>
-	<div class="container">
-		<div class="row">
-			<div class="col" id="timerDiv">
-				<div id="timerText" class="statsText">Time</div>
-				<div><span id="timer"></span></div>
-			</div>
-			<div class="col" id="wpmDiv">
-				<div id="wpmText" class="statsText">
-					WPM
-				</div>
-				<div id="wpm"></div>
-			</div>
-			<div class="col" id="accuracyDiv">
-				<div id="accuracyText" class="statsText">
-					Accuracy
-				</div>
-				<div id="accuracy">
-					<span> </span>
-				</div>
-			</div>
-		</div>
+  <!-- Title of page, in page -->
+  <h1>SPEEDTYPING</h1>
 
-		<div class="row"><div class="col"></div><div class="col"><div id="text-box"><div id="show-texts"></div></div></div><div class="col"></div></div>
+  <!-- container-fluid uses 100% width of the screen -->
+  <div class="container-fluid">
+    <div class="row">
+      <!-- offset 3 column -->
+      <div class="col-3"></div>
 
-		<div class="row">
-			<div class="col-4"></div>
-			<div class="col-4">
-				<button id="start">Start</button>
-				<button id="reset">Reset</button>
-			</div>
-			<div class="col-4"></div>
-		</div>
-	</div>
-	<script type="text/javascript" src="script.js"></script>
+      <!-- Main Game Area -->
+      <div class="col-6">
+
+        <!-- Row 1: Timer, WPM and Accuracy shown -->
+        <div class="row" style="height:80px">
+
+          <!-- Timer space -->
+          <div class="col-4 h-100 mx-auto" id="timerDiv">
+            <div id="timerText" class="statsText">Time</div>
+            <div><span id="timer"></span></div>
+          </div>
+
+          <!-- WPM space -->
+          <div class="col-4 h-100 mx-auto" id="wpmDiv">
+            <div id="wpmText" class="statsText">
+              WPM
+            </div>
+            <div id="wpm"></div>
+          </div>
+
+          <!-- Accuracy Space -->
+          <div class="col-4 h-100 mx-auto" id="accuracyDiv">
+            <div id="accuracyText" class="statsText">
+              Accuracy
+            </div>
+            <div id="accuracy">
+              <span> </span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Row 2: Space where the text will appear -->
+        <div class="row m-0 p-0">
+          <div class="col-12 mx-auto" id="text-box">
+            <!-- <div class="mx-auto" id="text-box"> -->
+            <div id="show-texts"></div>
+          </div>
+        </div>
+
+        <!-- Row 3: Start and Reset Button -->
+        <div class="row">
+          <div class="col-6">
+            <button id="start">Start</button>
+          </div>
+          <div class="col-6">
+            <button id="reset">Reset</button>
+          </div>
+        </div>
+      </div>
+
+      <!--last 3 col -->
+      <div class="col-3"></div>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="script.js"></script>
+
 </body>
 </html>

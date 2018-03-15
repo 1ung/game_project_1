@@ -1,5 +1,7 @@
 # game_project_1
 
+Link:
+https://1ung.github.io/game_project_1/
 
 
 Game Instructions:
@@ -17,7 +19,6 @@ Game Instructions:
 Unsolved problems
 
 - Getting WPM
-- Getting Accuracy
 - Displaying  WPM
 - Displaying Accuracy
 - Reset button
@@ -25,7 +26,7 @@ Unsolved problems
 
 Bugs:
 
-- Start button tends to autoclick itself
+- Looking for it
 
 
 

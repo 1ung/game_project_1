@@ -1,22 +1,27 @@
+body {
+	text-align: center;
+}
+
 .statsText {
 	font-family: 'Roboto', sans-serif;
 	font-weight: bold;
 	display: inline-block;
+	font-size: 1.4rem;
 
 }
 
 #text-box {
 	margin: 20px 0;
-	/*border: 3px solid black;*/
 
 }
 
 #show-texts {
-	width: 688px;
-	height: 165px;
-	overflow: scroll;
+	height: 45vh;
+	width: 45vw;
+	overflow-y: scroll;
 	font-family: 'Inconsolata', monospace;
-	font-size: 26px;
+	font-size: 1.7rem;
+	text-align: left;
 	background-color: #F5F5F5;
 	border: 5px solid #ff8000;
 	white-space: pre-wrap;
@@ -76,4 +81,3 @@
 .correct-space {
 	
 }
-

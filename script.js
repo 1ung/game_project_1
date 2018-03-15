@@ -26,9 +26,13 @@ var uncorrectedErrors = 0;
 // prevent timer from recurring
 var preventTimer = 0;
 // wpm
-var wpm = null;
+var wpm = 0;
 // accuracy
 var accuracy = null;
+// correct keys
+var correctKeys = 0;
+// flag
+var flag = false;
 
 
 var threePigs = "Once upon a time there was an old mother pig who had three little pigs and not enough food to feed them. So when they were old enough, she sent them out into the world to seek their fortunes. The first little pig was very lazy. He didn't want to work at all and he built his house out of straw. The second little pig worked a little bit harder but he was somewhat lazy too and he built his house out of sticks. Then, they sang and danced and played together the rest of the day. The third little pig worked hard all day and built his house with bricks. It was a sturdy house complete with a fine fireplace and chimney. It looked like it could withstand the strongest winds. The next day, a wolf happened to pass by the lane where the three little pigs lived; and he saw the straw house, and he smelled the pig inside. He thought the pig would make a mighty fine meal and his mouth began to water. So he huffed and he puffed and he blew the house down! The wolf opened his jaws very wide and bit down as hard as he could, but the first little pig escaped and ran away to hide with the second little pig. The wolf continued down the lane and he passed by the second house made of sticks; and he saw the house, and he smelled the pigs inside, and his mouth began to water as he thought about the fine dinner they would make. So he huffed and he puffed and he blew the house down! The wolf was greedy and he tried to catch both pigs at once, but he was too greedy and got neither! His big jaws clamped down on nothing but air and the two little pigs scrambled away as fast as their little hooves would carry them. The wolf chased them down the lane and he almost caught them. But they made it to the brick house and slammed the door closed before the wolf could catch them." 
@@ -37,7 +41,7 @@ var threePigs = "Once upon a time there was an old mother pig who had three litt
 
 // countdown from 1 min
 var timer = document.getElementById('timer');
-var countdown = 60;
+var countdown = 3600;
 
 
 function onTimer() {
@@ -92,19 +96,22 @@ function focusBox() {
 
 // on click, initiate functions to start game
 start.addEventListener('click', function() {
-	focusBox();
-	activate();
-	highlight();
-
+	if (flag === false) {
+		focusBox();
+		activate();
+		highlight();
+		flag = true;
+	}
 });
 
 
-// fires off following functions when keydown
+//fires off following functions when keydown
 function activate() {
 	window.addEventListener('keydown', checkKeyPress);
 	window.addEventListener('keydown', initCountdown);
 
 };
+
 
 var spanray = Array.from(document.querySelectorAll('.script-letter'));
 
@@ -157,6 +164,7 @@ function checkKeyPress() {
 			previousPos = currentPos;
 			currentPos --;
 			spanray[previousPos].classList.toggle('current-letter');
+			console.log(currentPos);
 
 			if (spanray[currentPos].classList.contains('wrong-space')) {
 
@@ -204,9 +212,11 @@ function checkKeyPress() {
 
 			 	preventTimer++;
 			 	totalEntries++;
+			 	correctKeys++;
 
 			 	console.log('total entries = ' + totalEntries)
 			 	console.log(currentPos);
+			 	console.log('total correct keys = ' + correctKeys)
 
 			 } else {
 
@@ -219,9 +229,11 @@ function checkKeyPress() {
 
 			 	preventTimer++;
 			 	totalEntries++;
+			 	correctKeys++;
 
 			 	console.log('total entries = ' + totalEntries)
 			 	console.log(currentPos);
+			 	console.log('total correct keys = ' + correctKeys)
 
 			 }
 
@@ -265,12 +277,12 @@ function checkKeyPress() {
 
 //create special Id for scroll function
 
-spanray[261].setAttribute('id', 'first-scroll');
-spanray[363].setAttribute('id', 'second-scroll');
-spanray[465].setAttribute('id', 'third-scroll');
-spanray[567].setAttribute('id', 'fourth-scroll');
-spanray[669].setAttribute('id', 'fifth-scroll');
-spanray[771].setAttribute('id', 'sixth-scroll');
+spanray[580].setAttribute('id', 'first-scroll');
+spanray[950].setAttribute('id', 'second-scroll');
+spanray[1315].setAttribute('id', 'third-scroll');
+// spanray[999].setAttribute('id', 'fourth-scroll');
+// spanray[999].setAttribute('id', 'fifth-scroll');
+// spanray[999].setAttribute('id', 'sixth-scroll');
 
 var firstScroll = document.getElementById('first-scroll');
 var secondScroll = document.getElementById('second-scroll');
@@ -306,24 +318,24 @@ function scrollSix() {
 };
 
 function initScroll() {
-	if (currentPos === 201) {
+	if (currentPos === 401) {
 		scrollOne();
 
-	} else if (currentPos === 305) {
+	} else if (currentPos === 766) {
 		scrollTwo();
 
-	} else if (currentPos === 410) {
+	} else if (currentPos === 1136) {
 		scrollThree();
 
-	} else if (currentPos === 512) {
-		scrollFour();
+	} // else if (currentPos === 2000) {
+	// 	scrollFour();
 
-	} else if (currentPos === 613) {
-		scrollFive();
+	// } else if (currentPos === 2000) {
+	// 	scrollFive();
 
-	} else if (currentPos === 718) {
-		scrollSix();
-	}
+	// } else if (currentPos === 2000) {
+	// 	scrollSix();
+	// }
 
 
 };
@@ -361,9 +373,9 @@ var wpmId = document.getElementById('wpm');
 // get value for Net WPM
 function netWpm() {
 
-		wpmId.textContent = wpm;
-		wpm = Math.round([((totalEntries / 5) - uncorrectedErrors) / (countdown / 60)]);
-		return wpm;
+	wpmId.textContent = wpm;
+	wpm = Math.round([((totalEntries / 5) - uncorrectedErrors) / (countdown / 60)]);
+
 };
 
 
@@ -373,9 +385,7 @@ var accuracyId = document.getElementById('accuracy');
 // count for Accuracy
 function typingAccuracy() {
 
-		accuracyId.textContent = accuracy;
-		accuracy = Math.round([(correctEntries - totalIncorrectEntries) / totalEntries] * 100)
-		return accuracy;
+	accuracyId.textContent = accuracy;
+	accuracy = Math.round([(correctKeys / totalEntries) * 100])
 	
 };
-

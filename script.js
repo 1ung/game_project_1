@@ -37,7 +37,7 @@ var threePigs = "Once upon a time there was an old mother pig who had three litt
 
 // countdown from 1 min
 var timer = document.getElementById('timer');
-var countdown = 15;
+var countdown = 60;
 
 
 function onTimer() {
@@ -49,11 +49,9 @@ function onTimer() {
 
 		correctEnt();
 		uncorrectedEnt();
-		netWPM();
+		netWpm();
 		typingAccuracy();
 
-		console.log('wpm = ' + netWPM())
-		console.log(' accuracy = ' + typingAccuracy());
 
 	}
 
@@ -356,24 +354,28 @@ function uncorrectedEnt() {
 		}
 	}
 };
-// get value for Gross WPM
-var grossWPM = [(totalEntries / 5)] / (countdown / 60);
 
+
+//get wpm id 
+var wpmId = document.getElementById('wpm');
 // get value for Net WPM
-function netWPM() {
+function netWpm() {
 
-	wpm = grossWPM - [uncorrectedErrors / (countdown / 60)]
-	Math.round(wpm);
-	return wpm;
-
+		wpmId.textContent = wpm;
+		wpm = Math.round([((totalEntries / 5) - uncorrectedErrors) / (countdown / 60)]);
+		return wpm;
 };
+
+
+// get accuracy id
+var accuracyId = document.getElementById('accuracy');
 
 // count for Accuracy
 function typingAccuracy() {
 
-	accuracy = [(correctEntries - totalIncorrectEntries) / totalEntries] * 100
-	Math.round(accuracy);
-	return accuracy;
-
+		accuracyId.textContent = accuracy;
+		accuracy = Math.round([(correctEntries - totalIncorrectEntries) / totalEntries] * 100)
+		return accuracy;
+	
 };
 

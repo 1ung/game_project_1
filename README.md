@@ -23,8 +23,6 @@ Unsolved problems
 
 Bugs:
 
-- Remove event listener not working when timer < 0
-- Math.round(accuracy) does not seem to work
 - not sure about WPM..
 
 

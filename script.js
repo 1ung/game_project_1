@@ -11,14 +11,24 @@
 = complete words
 */
 
+// blue letters
+var correctEntries = 0;
+// total valid keys typed
+var totalEntries = 0;
+// current letter index
 var currentPos = 0;
+// previous letter index
 var previousPos = 0;
-var correctKeys = 0;
-var wrongKeys = 0;
-var totalKeys = 0;
-var ammendedKeys = 0;
-var wordsTyped = 0;
+// number of errors
+var totalIncorrectEntries = 0;
+// uncorrected errors (remaining reds)
+var uncorrectedErrors = 0;
+// prevent timer from recurring
 var preventTimer = 0;
+// wpm
+var wpm = null;
+// accuracy
+var accuracy = null;
 
 
 var threePigs = "Once upon a time there was an old mother pig who had three little pigs and not enough food to feed them. So when they were old enough, she sent them out into the world to seek their fortunes. The first little pig was very lazy. He didn't want to work at all and he built his house out of straw. The second little pig worked a little bit harder but he was somewhat lazy too and he built his house out of sticks. Then, they sang and danced and played together the rest of the day. The third little pig worked hard all day and built his house with bricks. It was a sturdy house complete with a fine fireplace and chimney. It looked like it could withstand the strongest winds. The next day, a wolf happened to pass by the lane where the three little pigs lived; and he saw the straw house, and he smelled the pig inside. He thought the pig would make a mighty fine meal and his mouth began to water. So he huffed and he puffed and he blew the house down! The wolf opened his jaws very wide and bit down as hard as he could, but the first little pig escaped and ran away to hide with the second little pig. The wolf continued down the lane and he passed by the second house made of sticks; and he saw the house, and he smelled the pigs inside, and his mouth began to water as he thought about the fine dinner they would make. So he huffed and he puffed and he blew the house down! The wolf was greedy and he tried to catch both pigs at once, but he was too greedy and got neither! His big jaws clamped down on nothing but air and the two little pigs scrambled away as fast as their little hooves would carry them. The wolf chased them down the lane and he almost caught them. But they made it to the brick house and slammed the door closed before the wolf could catch them." 
@@ -27,17 +37,23 @@ var threePigs = "Once upon a time there was an old mother pig who had three litt
 
 // countdown from 1 min
 var timer = document.getElementById('timer');
-var countdown = 10;
+var countdown = 15;
 
 
 function onTimer() {
-	timer.innerHTML = countdown;
+	timer.textContent = countdown;
 	countdown--;
 	if (countdown < 0) {
 		timer.style.backgroundColor = 'red';
 		window.removeEventListener('keydown', checkKeyPress);
 
-		keyCount();
+		correctEnt();
+		uncorrectedEnt();
+		netWPM();
+		typingAccuracy();
+
+		console.log('wpm = ' + netWPM())
+		console.log(' accuracy = ' + typingAccuracy());
 
 	}
 
@@ -142,31 +158,35 @@ function checkKeyPress() {
 
 			previousPos = currentPos;
 			currentPos --;
-			spanray[previousPos].classList.toggle("current-letter");
+			spanray[previousPos].classList.toggle('current-letter');
 
-			preventTimer++;
-			console.log(currentPos);
+			if (spanray[currentPos].classList.contains('wrong-space')) {
 
-			if (spanray[currentPos].textContent === " ") {
+				spanray[currentPos].classList.toggle('wrong-space');
+				spanray[currentPos].classList.toggle('current-letter');
 
-				spanray[currentPos].style.backgroundColor = 'red';
-				spanray[currentPos].classList.toggle("current-letter");
+			} else if (spanray[currentPos].classList.contains('wrong-letter')) {
 
-			} else {
+				spanray[currentPos].classList.toggle('wrong-letter');
+				spanray[currentPos].classList.toggle('current-letter');
 
-				spanray[currentPos].style.color = '#808080';
-				spanray[currentPos].classList.toggle("current-letter");
+			} else if (spanray[currentPos].classList.contains('correct-letter')) {
+
+				spanray[currentPos].classList.toggle('correct-letter');
+				spanray[currentPos].classList.toggle('current-letter');
+
+			} else if (spanray[currentPos].classList.contains('correct-space')) {
+
+				spanray[currentPos].classList.toggle('correct-space');
+				spanray[currentPos].classList.toggle('current-letter');
 
 			}
 
 
-
-
 		} else if (currentPos === 0) {
-			spanray[currentPos].style.color = 'white';
 
 			preventTimer ++;
-		};
+		}
 
 			 // condition to check for space and chg bk bg color if ammended
 
@@ -177,53 +197,66 @@ function checkKeyPress() {
 
 			 if (spanray[currentPos].textContent === " ") {
 
-			 	spanray[currentPos].style.backgroundColor = '#F5F5F5';
 			 	previousPos = currentPos;
 			 	currentPos++;
 			 	spanray[previousPos].classList.toggle("current-letter");
+			 	spanray[previousPos].classList.toggle('correct-space');
 			 	spanray[currentPos].classList.toggle("current-letter");
 
-			 	preventTimer++;
-			 	totalKeys++;
 
+			 	preventTimer++;
+			 	totalEntries++;
+
+			 	console.log('total entries = ' + totalEntries)
 			 	console.log(currentPos);
 
 			 } else {
 
-			 	spanray[currentPos].style.color = 'blue';
 			 	previousPos = currentPos;
 			 	currentPos++;
 			 	spanray[previousPos].classList.toggle("current-letter");
+			 	spanray[previousPos].classList.toggle('correct-letter');
 			 	spanray[currentPos].classList.toggle("current-letter");
 
+
 			 	preventTimer++;
-			 	totalKeys++;
+			 	totalEntries++;
 
+			 	console.log('total entries = ' + totalEntries)
 			 	console.log(currentPos);
-
 
 			 }
 
 
+
+
 			 break;
+
 
 			 default:
 
-			 spanray[currentPos].style.color = 'red';
 			 previousPos = currentPos;
 			 currentPos++;
+
 			 spanray[previousPos].classList.toggle("current-letter");
+			 spanray[previousPos].classList.toggle('wrong-letter');
 			 spanray[currentPos].classList.toggle("current-letter");
 
 			 preventTimer ++;
-			 totalKeys++;
+			 totalEntries++;
+			 totalIncorrectEntries ++;
 			 console.log(currentPos);
+			 console.log('total entries = ' + totalEntries)
+			 console.log('total incorrect entries = ' + totalIncorrectEntries);
 
 			 if (spanray[previousPos].textContent === " ") {
-			 	spanray[previousPos].style.backgroundColor = 'red';
+
+			 	spanray[previousPos].classList.toggle('wrong-letter');
+			 	spanray[previousPos].classList.toggle('wrong-space');
 
 
-			 } 
+
+			 }
 
 			 break;
 
@@ -297,32 +330,50 @@ function initScroll() {
 
 };
 
-function keyCount() {
-	
+// value of total blues & valid spaces
+function correctEnt() {
+
 	for (var k = 0; k < currentPos; k++) {
 
-		totalKeys += 1;
-		console.log('total keys = ' + totalKeys);
+		if (spanray[k].classList.contains('correct-letter') || spanray[k].classList.contains('correct-space')) {
 
-		if (spanray[k].style.color === 'blue') {
-			correctKeys += 1;
-			console.log('correct keys = ' + correctKeys);
-
-		} else if (spanray[k].style.color === 'red') {
-			wrongKeys +=1;
-			console.log('wrong keys = ' + wrongKeys);
-
-		} else if (spanray[k].textContent === " ") {
-			wordsTyped += 1;
-			console.log('total words = ' + wordsTyped);
-
-		}
+			correctEntries += 1
+			console.log('correct keys = ' + correctEntries);
+			
+		}	
 	}
 };
 
-// correct = blue && space !== red
+// value of remaining reds
+function uncorrectedEnt() {
 
-// wrong = red && space red
+	for (var x = 0; x < currentPos; x++) {
 
-// total = red + blue + space
+		if (spanray[x].classList.contains('wrong-letter') || spanray[x].classList.contains('wrong-space')) {
+
+			uncorrectedErrors += 1
+			console.log('uncorrected errors = ' + uncorrectedErrors);
+		}
+	}
+};
+// get value for Gross WPM
+var grossWPM = [(totalEntries / 5)] / (countdown / 60);
+
+// get value for Net WPM
+function netWPM() {
+
+	wpm = grossWPM - [uncorrectedErrors / (countdown / 60)]
+	Math.round(wpm);
+	return wpm;
+
+};
+
+// count for Accuracy
+function typingAccuracy() {
+
+	accuracy = [(correctEntries - totalIncorrectEntries) / totalEntries] * 100
+	Math.round(accuracy);
+	return accuracy;
+
+};
 

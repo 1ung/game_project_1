@@ -61,3 +61,19 @@
 	background-color: #000000;
 }
 
+.correct-letter {
+	color: blue;
+}
+
+.wrong-letter {
+	color: red;
+}
+
+.wrong-space {
+	background-color: red;
+}
+
+.correct-space {
+	
+}
+

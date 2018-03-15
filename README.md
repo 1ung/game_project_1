@@ -16,6 +16,8 @@ Game Instructions:
 
 Unsolved problems
 
+- Getting WPM
+- Getting Accuracy
 - Displaying  WPM
 - Displaying Accuracy
 - Reset button
@@ -23,7 +25,7 @@ Unsolved problems
 
 Bugs:
 
-- not sure about WPM..
+- Start button tends to autoclick itself
 
 
 

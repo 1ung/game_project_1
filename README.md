@@ -1,5 +1,7 @@
 # game_project_1
 
+
+
 Game Instructions:
 
 - Click start to begin
@@ -14,14 +16,16 @@ Game Instructions:
 
 Unsolved problems
 
-- WPM
-- Accuracy
+- Displaying  WPM
+- Displaying Accuracy
 - Reset button
 
 
 Bugs:
 
-- Text color not turning to white when backspaced
+- Remove event listener not working when timer < 0
+- Math.round(accuracy) does not seem to work
+- not sure about WPM..
 
 
 

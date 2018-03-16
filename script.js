@@ -29,14 +29,12 @@ var preventTimer = 0;
 var wpm = 0;
 // accuracy
 var accuracy = 100;
-// correct keys
-var correctKeys = 0;
 // flag
 var flag = false;
-// colate array of keypress
-// var array = [];
 // words for wpm
-var validWords = 0;
+var numSpaces = 0;
+// fixed timer value
+var totalTime = 20;
 
 
 var threePigs = "Once upon a time there was an old mother pig who had three little pigs and not enough food to feed them. So when they were old enough, she sent them out into the world to seek their fortunes. The first little pig was very lazy. He didn't want to work at all and he built his house out of straw. The second little pig worked a little bit harder but he was somewhat lazy too and he built his house out of sticks. Then, they sang and danced and played together the rest of the day. The third little pig worked hard all day and built his house with bricks. It was a sturdy house complete with a fine fireplace and chimney. It looked like it could withstand the strongest winds. The next day, a wolf happened to pass by the lane where the three little pigs lived; and he saw the straw house, and he smelled the pig inside. He thought the pig would make a mighty fine meal and his mouth began to water. So he huffed and he puffed and he blew the house down! The wolf opened his jaws very wide and bit down as hard as he could, but the first little pig escaped and ran away to hide with the second little pig. The wolf continued down the lane and he passed by the second house made of sticks; and he saw the house, and he smelled the pigs inside, and his mouth began to water as he thought about the fine dinner they would make. So he huffed and he puffed and he blew the house down! The wolf was greedy and he tried to catch both pigs at once, but he was too greedy and got neither! His big jaws clamped down on nothing but air and the two little pigs scrambled away as fast as their little hooves would carry them. The wolf chased them down the lane and he almost caught them. But they made it to the brick house and slammed the door closed before the wolf could catch them." 
@@ -45,7 +43,7 @@ var threePigs = "Once upon a time there was an old mother pig who had three litt
 
 // countdown from 1 min
 var timer = document.getElementById('timer');
-var countdown = 60;
+var countdown = 20;
 
 
 function onTimer() {
@@ -57,8 +55,9 @@ function onTimer() {
 
 		correctEnt();
 		uncorrectedEnt();
-		netWpm();
+		getNumSpace();
 		typingAccuracy();
+		netWpm();
 
 
 	}
@@ -140,9 +139,11 @@ var reset = document.getElementById('reset');
 function checkKeyPress() {
 
 	initScroll();
-	// getting words for wpm
-	// array = [];
-	// array.push(event.key);
+	// correctEnt();
+	// uncorrectedEnt();
+	// getNumSpace();
+	// typingAccuracy();
+	// netWpm();
 
 
 	switch(event.key) {
@@ -219,11 +220,10 @@ function checkKeyPress() {
 
 			 	preventTimer++;
 			 	totalEntries++;
-			 	correctKeys++;
 
-			 	console.log('total entries = ' + totalEntries)
 			 	console.log(currentPos);
-			 	console.log('total correct keys = ' + correctKeys)
+			 	console.log('total entries = ' + totalEntries)
+
 
 			 } else {
 
@@ -236,11 +236,9 @@ function checkKeyPress() {
 
 			 	preventTimer++;
 			 	totalEntries++;
-			 	correctKeys++;
 
-			 	console.log('total entries = ' + totalEntries)
 			 	console.log(currentPos);
-			 	console.log('total correct keys = ' + correctKeys)
+
 
 			 }
 
@@ -271,6 +269,8 @@ function checkKeyPress() {
 			 	spanray[previousPos].classList.toggle('wrong-letter');
 			 	spanray[previousPos].classList.toggle('wrong-space');
 
+			 	numSpaces++;
+			 	console.log('total num of spaces = ' + numSpaces);
 
 
 			 }
@@ -374,17 +374,14 @@ function uncorrectedEnt() {
 	}
 };
 
+function getNumSpace() {
+	for (var s = 0; s < currentPos; s++) {
+		if (spanray[s].classList.contains('correct-space') || spanray[s].classList.contains('wrong-space')) {
 
-//get wpm id 
-var wpmId = document.getElementById('wpm');
-// get value for Net WPM
-function netWpm() {
-
-	wpmId.textContent = wpm;
-	// array.join();
-	// array.split();
-
-};
+			numSpaces += 1
+		}
+	}
+}
 
 
 // get accuracy id
@@ -394,8 +391,24 @@ var accuracyId = document.getElementById('accuracy');
 function typingAccuracy() {
 
 	accuracyId.textContent = accuracy + " %"
-	accuracy = Math.round([(correctKeys / totalEntries) * 100])
+	accuracy = Math.round([(correctEntries / totalEntries) * 100]);
+	if (totalEntries === 0) {
+		accuracy = 0;
+	}
 	
 };
 
 setInterval(typingAccuracy, 1000);
+
+//get wpm id 
+var wpmId = document.getElementById('wpm');
+// get value for Net WPM
+function netWpm() {
+
+	wpmId.textContent = wpm;
+	wpm = Math.round([(numSpaces / (totalTime / 60)) * (accuracy / 100)]);
+	
+
+};
+
+setInterval(netWpm, 1000);

@@ -2,6 +2,14 @@ body {
 	text-align: center;
 }
 
+.bg{
+	background-image: url("284.jpg");
+	height: 100%;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
 .statsText {
 	font-family: 'Roboto', sans-serif;
 	font-weight: bold;

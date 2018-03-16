@@ -25,7 +25,7 @@ Unsolved problems
 
 Bugs:
 
-- Looking for it
+- Hiding
 
 
 

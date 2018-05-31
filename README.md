@@ -18,8 +18,6 @@ Game Instructions:
 
 Unsolved problems
 
-- Getting WPM
-- Displaying  WPM
 - Reset button
 
 

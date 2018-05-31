@@ -1,15 +1,14 @@
 // allow reset
-
+// 1. code process (colors), page scrolling. 
+// 2. switch statements
 
 /* Test results = 
 = speed (WPM) (not sure how to calculate words)
-= Accuracy (not affected upon backspace)
-= correct entries (letters)
-= incorrect entries (letters)
-= amended entries (letters)
 = error rate
 = complete words
 */
+
+//flag, totalTime, clickReset, countdown 
 
 // blue letters
 var correctEntries = 0;
@@ -28,14 +27,15 @@ var preventTimer = 0;
 // wpm
 var wpm = 0;
 // accuracy
-var accuracy = 100;
+var accuracy = 0;
 // flag
 var flag = false;
 // words for wpm
 var numSpaces = 0;
-// fixed timer value
-var totalTime = 60;
-
+// count time upwards 
+var countUp = 0;
+// prevent count from recurring
+var countInc = 0;
 
 var threePigs = "Once upon a time there was an old mother pig who had three little pigs and not enough food to feed them. So when they were old enough, she sent them out into the world to seek their fortunes. The first little pig was very lazy. He didn't want to work at all and he built his house out of straw. The second little pig worked a little bit harder but he was somewhat lazy too and he built his house out of sticks. Then, they sang and danced and played together the rest of the day. The third little pig worked hard all day and built his house with bricks. It was a sturdy house complete with a fine fireplace and chimney. It looked like it could withstand the strongest winds. The next day, a wolf happened to pass by the lane where the three little pigs lived; and he saw the straw house, and he smelled the pig inside. He thought the pig would make a mighty fine meal and his mouth began to water. So he huffed and he puffed and he blew the house down! The wolf opened his jaws very wide and bit down as hard as he could, but the first little pig escaped and ran away to hide with the second little pig. The wolf continued down the lane and he passed by the second house made of sticks; and he saw the house, and he smelled the pigs inside, and his mouth began to water as he thought about the fine dinner they would make. So he huffed and he puffed and he blew the house down! The wolf was greedy and he tried to catch both pigs at once, but he was too greedy and got neither! His big jaws clamped down on nothing but air and the two little pigs scrambled away as fast as their little hooves would carry them. The wolf chased them down the lane and he almost caught them. But they made it to the brick house and slammed the door closed before the wolf could catch them." 
 
@@ -43,7 +43,9 @@ var threePigs = "Once upon a time there was an old mother pig who had three litt
 
 // countdown from 1 min
 var timer = document.getElementById('timer');
-var countdown = 60;
+var countdown = 20;
+// fixed timer value
+var totalTime = countdown;
 
 
 function onTimer() {
@@ -75,6 +77,18 @@ function initCountdown() {
 	}
 }
 
+function countingUp() {
+	if (countdown >= 0) {
+		countUp ++;
+	}
+};
+
+// prevent countingUp from executing more than once
+function initCountUp() {
+	if (countInc === 1) {
+		countingUp();
+	}
+};
 
 // append letters into box
 var showTexts = document.getElementById('show-texts');
@@ -111,8 +125,6 @@ start.addEventListener('click', function() {
 //fires off following functions when keydown
 function activate() {
 	window.addEventListener('keydown', checkKeyPress);
-	window.addEventListener('keydown', initCountdown);
-
 };
 
 
@@ -131,7 +143,9 @@ function highlight() {
 var reset = document.getElementById('reset');
 
 // reset page upon click
-
+reset.onclick = function() {
+	onClick = window.location.reload(true);
+};
 
 // checks for every letter and moves to the next
 
@@ -139,11 +153,7 @@ var reset = document.getElementById('reset');
 function checkKeyPress() {
 
 	initScroll();
-	// correctEnt();
-	// uncorrectedEnt();
-	// getNumSpace();
-	// typingAccuracy();
-	// netWpm();
+	initCountdown();
 
 
 	switch(event.key) {
@@ -200,6 +210,7 @@ function checkKeyPress() {
 		} else if (currentPos === 0) {
 
 			preventTimer ++;
+			countInc++;
 		}
 
 			 // condition to check for space and chg bk bg color if ammended
@@ -219,6 +230,7 @@ function checkKeyPress() {
 
 
 			 	preventTimer++;
+			 	countInc++;
 			 	totalEntries++;
 
 			 	console.log(currentPos);
@@ -236,6 +248,7 @@ function checkKeyPress() {
 
 			 	preventTimer++;
 			 	totalEntries++;
+			 	countInc++;
 
 			 	console.log(currentPos);
 
@@ -258,6 +271,7 @@ function checkKeyPress() {
 			 spanray[currentPos].classList.toggle("current-letter");
 
 			 preventTimer ++;
+			 countInc ++;
 			 totalEntries++;
 			 totalIncorrectEntries ++;
 			 console.log(currentPos);
